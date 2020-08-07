@@ -8,7 +8,7 @@ const loginRequest = (email, password) => async (dispatch) => {
     const res = await api.post("/auth/login", { email, password });
     const name = res.data.data.name;
     dispatch(alertActions.setAlert(`Welcome back, ${name}`, "success"));
-    dispatch({ type: types.LOGIN_SUCCESS, payload: res.data.data });
+    dispatch({ type: types.LOGIN_SUCCESS, payload: res.data });
   } catch (error) {
     dispatch({ type: types.LOGIN_FAILURE, payload: error });
   }
@@ -24,7 +24,22 @@ const register = (name, email, password) => async (dispatch) => {
   }
 };
 
+const getCurrentUser = (accessToken) => async (dispatch) => {
+  dispatch({ type: types.GET_CURRENT_USER_REQUEST, payload: null });
+  if (accessToken) {
+    const bearerToken = "Bearer " + accessToken;
+    api.defaults.headers.common["authorization"] = bearerToken;
+  }
+  try {
+    const res = await api.get("/users/me");
+    dispatch({ type: types.GET_CURRENT_USER_SUCCESS, payload: res.data.data });
+  } catch (error) {
+    dispatch({ type: types.GET_CURRENT_USER_FAILURE, payload: error });
+  }
+};
+
 export const authActions = {
   loginRequest,
   register,
+  getCurrentUser,
 };
