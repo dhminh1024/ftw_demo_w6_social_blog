@@ -2,8 +2,11 @@ import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { useSelector } from "react-redux";
 
-const PublicNavbar = ({ isAuthenticated, loading }) => {
+const PublicNavbar = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const loading = useSelector((state) => state.auth.loading);
   const handleLogout = () => {
     // TODO: handle Logout
   };

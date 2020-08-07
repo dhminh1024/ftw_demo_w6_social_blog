@@ -1,27 +1,35 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Redirect, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { authActions } from "../../redux/actions";
 
-const LoginPage = ({ isAuthenticated, loading }) => {
+const LoginPage = () => {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "minh@cs.vn",
+    password: "123",
   });
   const [errors, setErrors] = useState({
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const loading = useSelector((state) => state.auth.loading);
+
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const { email, password } = formData;
+    const { email, password } = formData;
     // if (password.length < 6) {
     //   setErrors({ ...errors, password: "Password must be longer than 6" });
     //   return;
     // }
-    // TODO: Handle submit form
+    dispatch(authActions.loginRequest(email, password));
   };
+
   if (isAuthenticated) return <Redirect to="/" />;
   return (
     <Container>
