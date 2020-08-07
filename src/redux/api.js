@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "./store";
+import { alertActions } from "./actions";
 
 const api = axios.create({
   baseURL: "https://social-api-cs.great.dev/",
@@ -28,6 +29,7 @@ api.interceptors.response.use(
   function (error) {
     error = error.response.data;
     console.log("RESPONSE ERROR", error);
+    store.dispatch(alertActions.setAlert(error.message, "danger"));
     return Promise.reject(error);
   }
 );
