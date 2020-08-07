@@ -15,11 +15,11 @@ const LoginPage = ({ isAuthenticated, loading }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = formData;
-    if (password.length < 6) {
-      setErrors({ ...errors, password: "Password must be longer than 6" });
-      return;
-    }
+    // const { email, password } = formData;
+    // if (password.length < 6) {
+    //   setErrors({ ...errors, password: "Password must be longer than 6" });
+    //   return;
+    // }
     // TODO: Handle submit form
   };
   if (isAuthenticated) return <Redirect to="/" />;
