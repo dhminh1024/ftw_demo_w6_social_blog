@@ -5,6 +5,7 @@ import LoginPage from "../containers/LoginPage";
 import RegisterPage from "../containers/RegisterPage";
 import { Container } from "react-bootstrap";
 import { Switch, Route } from "react-router-dom";
+import NotFoundPage from "./NotFoundPage";
 
 const PublicLayout = () => {
   return (
@@ -15,6 +16,7 @@ const PublicLayout = () => {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
+          <Route component={NotFoundPage} />
         </Switch>
       </Container>
     </>
