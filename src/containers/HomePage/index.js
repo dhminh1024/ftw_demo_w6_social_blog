@@ -1,10 +1,14 @@
 import React from "react";
+import PublicNavbar from "../PublicNavbar";
+import { Container } from "react-bootstrap";
 
 const HomePage = () => {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <>
+      <Container>
+        <h1>Homepage</h1>
+      </Container>
+    </>
   );
 };
 
