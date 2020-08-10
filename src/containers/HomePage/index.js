@@ -4,15 +4,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { blogActions } from "../../redux/actions";
 import BlogCard from "../../components/BlogCard";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useHistory } from "react-router-dom";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.blog.loading);
   const blogs = useSelector((state) => state.blog.blogs);
-  console.log(blogs);
+  const history = useHistory();
   useEffect(() => {
     dispatch(blogActions.blogsRequest());
   }, [dispatch]);
+
+  const handleClickOnBlog = (id) => {
+    history.push(`/blogs/${id}`);
+  };
 
   return (
     <>
@@ -28,7 +33,11 @@ const HomePage = () => {
             {blogs.length ? (
               <CardColumns>
                 {blogs.map((blog) => (
-                  <BlogCard blog={blog} key={blog._id} />
+                  <BlogCard
+                    blog={blog}
+                    key={blog._id}
+                    handleClick={handleClickOnBlog}
+                  />
                 ))}
               </CardColumns>
             ) : (
