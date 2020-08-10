@@ -46,8 +46,10 @@ const createNewBlog = (title, content, images) => async (dispatch) => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
-    for (let index = 0; index < images.length; index++) {
-      formData.append("imagesUpload", images[index]);
+    if (images && images.lenth) {
+      for (let index = 0; index < images.length; index++) {
+        formData.append("imagesUpload", images[index]);
+      }
     }
     const res = await api.post("/blogs", formData);
 
@@ -57,6 +59,7 @@ const createNewBlog = (title, content, images) => async (dispatch) => {
     });
     dispatch(alertActions.setAlert("New blog has been created!", "success"));
   } catch (error) {
+    console.log(error.message);
     dispatch({ type: types.CREATE_BLOG_FAILURE, payload: error });
   }
 };

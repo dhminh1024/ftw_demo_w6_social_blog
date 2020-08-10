@@ -23,10 +23,10 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = formData;
-    // if (password.length < 6) {
-    //   setErrors({ ...errors, password: "Password must be longer than 6" });
-    //   return;
-    // }
+    if (password.length < 3) {
+      setErrors({ ...errors, password: "Password must be longer than 3" });
+      return;
+    }
     dispatch(authActions.loginRequest(email, password));
   };
 

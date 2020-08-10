@@ -1,15 +1,15 @@
 import React from "react";
-import PublicNavbar from "../containers/PublicNavbar";
-import HomePage from "../containers/HomePage";
-import LoginPage from "../containers/LoginPage";
-import RegisterPage from "../containers/RegisterPage";
+import PublicNavbar from "../PublicNavbar";
+import HomePage from "../HomePage";
+import LoginPage from "../LoginPage";
+import RegisterPage from "../RegisterPage";
 import { Container } from "react-bootstrap";
 import { Switch, Route } from "react-router-dom";
 import NotFoundPage from "./NotFoundPage";
 import AlertMsg from "./AlertMsg";
-import BlogDetailPage from "../containers/BlogDetailPage";
-import AddEditBlogPage from "../containers/AddEditBlogPage";
-import PrivateRoute from "../containers/Routes/PrivateRoute";
+import BlogDetailPage from "../BlogDetailPage";
+import AddEditBlogPage from "../AddEditBlogPage";
+import PrivateRoute from "../Routes/PrivateRoute";
 
 const PublicLayout = () => {
   return (

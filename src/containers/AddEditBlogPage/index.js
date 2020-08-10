@@ -63,15 +63,17 @@ const AddEditBlogPage = () => {
     dispatch(blogActions.deleteBlog(selectedBlog._id));
   };
 
-  if (redirectTo) {
-    if (redirectTo === "__GO_BACK__") {
-      dispatch(blogActions.setRedirectTo(""));
-      history.goBack();
-    } else {
-      history.push(redirectTo);
-      dispatch(blogActions.setRedirectTo(""));
+  useEffect(() => {
+    if (redirectTo) {
+      if (redirectTo === "__GO_BACK__") {
+        history.goBack();
+        dispatch(blogActions.setRedirectTo(""));
+      } else {
+        history.push(redirectTo);
+        dispatch(blogActions.setRedirectTo(""));
+      }
     }
-  }
+  }, [redirectTo, dispatch, history]);
 
   return (
     <Container>
