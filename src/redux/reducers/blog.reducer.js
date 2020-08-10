@@ -19,6 +19,22 @@ const blogReducer = (state = initialState, action) => {
     case types.BLOG_REQUEST_FAILURE:
     case types.GET_SINGLE_BLOG_REQUEST_FAILURE:
       return { ...state, loading: false };
+
+    case types.CREATE_REVIEW_REQUEST:
+      return { ...state, submitReviewLoading: true };
+
+    case types.CREATE_REVIEW_SUCCESS:
+      return {
+        ...state,
+        submitReviewLoading: false,
+        selectedBlog: {
+          ...state.selectedBlog,
+          reviews: [...state.selectedBlog.reviews, payload],
+        },
+      };
+
+    case types.CREATE_REVIEW_FAILURE:
+      return { ...state, submitReviewLoading: false };
     default:
       return state;
   }
