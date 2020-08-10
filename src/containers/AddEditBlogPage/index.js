@@ -15,6 +15,7 @@ const AddEditBlogPage = () => {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
+    images: null,
   });
   const loading = useSelector((state) => state.blog.loading);
   const dispatch = useDispatch();
@@ -34,14 +35,20 @@ const AddEditBlogPage = () => {
     }
   }, [addOrEdit, selectedBlog]);
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    if (e.target.name === "images") {
+      console.log(e.target.files);
+      setFormData({ ...formData, images: e.target.files });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { title, content } = formData;
+    const { title, content, images } = formData;
     if (addOrEdit === "Add") {
-      dispatch(blogActions.createNewBlog(title, content));
+      dispatch(blogActions.createNewBlog(title, content, images));
     } else if (addOrEdit === "Edit") {
       dispatch(blogActions.updateBlog(selectedBlog._id, title, content));
     }
@@ -94,6 +101,15 @@ const AddEditBlogPage = () => {
                 placeholder="Content"
                 name="content"
                 value={formData.content}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                type="file"
+                name="images"
+                multiple
+                accept="image/png image/jpeg image/jpg"
                 onChange={handleChange}
               />
             </Form.Group>
