@@ -9,6 +9,8 @@ const loginRequest = (email, password) => async (dispatch) => {
     const name = res.data.data.name;
     dispatch(alertActions.setAlert(`Welcome back, ${name}`, "success"));
     dispatch({ type: types.LOGIN_SUCCESS, payload: res.data });
+    api.defaults.headers.common["authorization"] =
+      "Bearer " + res.data.accessToken;
   } catch (error) {
     dispatch({ type: types.LOGIN_FAILURE, payload: error });
   }
@@ -38,8 +40,15 @@ const getCurrentUser = (accessToken) => async (dispatch) => {
   }
 };
 
+const logout = () => (dispatch) => {
+  delete api.defaults.headers.common["authorization"];
+  localStorage.setItem("accessToken", "");
+  dispatch({ type: types.LOGOUT, payload: null });
+};
+
 export const authActions = {
   loginRequest,
   register,
   getCurrentUser,
+  logout,
 };
