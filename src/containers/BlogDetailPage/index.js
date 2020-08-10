@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { blogActions } from "../../redux/actions";
 import { Button } from "react-bootstrap";
@@ -14,6 +14,7 @@ const BlogDetailPage = () => {
   const dispatch = useDispatch();
   const blog = useSelector((state) => state.blog.selectedBlog);
   const loading = useSelector((state) => state.blog.loading);
+  const currentUser = useSelector((state) => state.auth.user);
   const submitReviewLoading = useSelector(
     (state) => state.blog.subReviewLoading
   );
@@ -34,7 +35,7 @@ const BlogDetailPage = () => {
     if (params?.id) {
       dispatch(blogActions.getSingleBlog(params.id));
     }
-  }, [dispatch]);
+  }, [dispatch, params]);
 
   const handleGoBackClick = (e) => {
     history.goBack();
@@ -44,7 +45,6 @@ const BlogDetailPage = () => {
     <>
       <div>
         <Button onClick={handleGoBackClick}>Back</Button>
-        <h1>{blog.title}</h1>
       </div>
       {loading ? (
         <ClipLoader color="#f86c6b" size={150} loading={loading} />
@@ -53,10 +53,16 @@ const BlogDetailPage = () => {
           {blog && (
             <div className="mb-5">
               <h1>{blog.title}</h1>
-              <span className="text-muted">
-                @{blog?.user?.name} wrote{" "}
-                <Moment fromNow>{blog.createdAt}</Moment>
-              </span>
+              {currentUser?._id === blog?.user?._id ? (
+                <Link to={`/blog/edit/${blog._id}`}>
+                  <Button variant="primary">Edit</Button>
+                </Link>
+              ) : (
+                <span className="text-muted">
+                  @{blog?.user?.name} wrote{" "}
+                  <Moment fromNow>{blog.createdAt}</Moment>
+                </span>
+              )}
               <hr />
               <Markdown source={blog.content} />
               <hr />

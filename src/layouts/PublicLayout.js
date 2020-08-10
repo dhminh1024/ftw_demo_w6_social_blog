@@ -8,6 +8,8 @@ import { Switch, Route } from "react-router-dom";
 import NotFoundPage from "./NotFoundPage";
 import AlertMsg from "./AlertMsg";
 import BlogDetailPage from "../containers/BlogDetailPage";
+import AddEditBlogPage from "../containers/AddEditBlogPage";
+import PrivateRoute from "../containers/Routes/PrivateRoute";
 
 const PublicLayout = () => {
   return (
@@ -20,7 +22,12 @@ const PublicLayout = () => {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/blogs/:id" component={BlogDetailPage} />
-
+          <PrivateRoute exact path="/blog/add" component={AddEditBlogPage} />
+          <PrivateRoute
+            exact
+            path="/blog/edit/:id"
+            component={AddEditBlogPage}
+          />
           <Route component={NotFoundPage} />
         </Switch>
       </Container>
